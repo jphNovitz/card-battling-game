@@ -1,0 +1,60 @@
+<!-- Try to make a  card battling game -->
+<!-- using vanilla javascript          -->
+<!-- @jphNovitz                        -->
+<!-- hello@jiphi.be                    -->
+
+<html>
+    <head>
+        <meta charset="UTF-8"> 
+        <title>card battling game @jphNovitz</title>
+    </head>
+
+    <body>
+
+    </body>
+    <script>
+    /* variables definitions */
+        var cards = []
+        var family = ['clubs',  'spades', 'hearts', 'diamonds']
+        var figures = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'queen', 'valet', 'king', 'as']
+        var player_1 = null 
+        var player_2 = null
+
+
+    /* end variable definitions */
+
+        initialize()
+        while (cards.length > 0) {
+            let rand = cards[Math.floor(Math.random() * cards.length)]
+            let pos = cards.indexOf(rand)
+            player_1 += rand.value
+            cards.splice(pos,1)
+            console.log(cards.length)
+            console.log(rand)
+            console.log('player 1 ' + player_1)
+
+            rand = cards[Math.floor(Math.random() * cards.length)]
+            pos = cards.indexOf(rand)
+            player_2 += rand.value
+            cards.splice(pos,1)
+           // console.log(cards)
+            console.log('player 2 ' + player_2)
+        }
+        
+
+    /****** functions ******/
+        function initialize() {
+            figures.map(function (fig) {
+                for (let i = 0 ; i < 4 ; i++) {
+                    let test = {
+                        'family': family[i],
+                        'figure': fig,
+                        'value': figures.indexOf(fig)
+                    }
+                    cards.push(test)
+                }
+                
+            })
+        }
+    </script>
+</html>
