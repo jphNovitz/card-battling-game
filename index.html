@@ -17,32 +17,29 @@
         var cards = []
         var family = ['clubs',  'spades', 'hearts', 'diamonds']
         var figures = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'queen', 'valet', 'king', 'as']
-        var player_1 = null 
-        var player_2 = null
+        var player_1 = {
+            cards: [],
+            points: 0,
+            encore: true
+        };
+        var player_2 = {
+            cards: [],
+            points: 0,
+            encore: true
+        };
 
 
     /* end variable definitions */
 
         initialize()
-        while (cards.length > 0) {
-            let rand = cards[Math.floor(Math.random() * cards.length)]
-            let pos = cards.indexOf(rand)
-            player_1 += rand.value
-            cards.splice(pos,1)
-            console.log(cards.length)
-            console.log(rand)
-            console.log('player 1 ' + player_1)
+        distribute()
+        play()
+        console.log(player_1)
+        console.log(player_2)
 
-            rand = cards[Math.floor(Math.random() * cards.length)]
-            pos = cards.indexOf(rand)
-            player_2 += rand.value
-            cards.splice(pos,1)
-           // console.log(cards)
-            console.log('player 2 ' + player_2)
-        }
-        
 
     /****** functions ******/
+
         function initialize() {
             figures.map(function (fig) {
                 for (let i = 0 ; i < 4 ; i++) {
@@ -56,5 +53,56 @@
                 
             })
         }
+
+        function distribute() {
+            while (cards.length > 0) {
+                let rand = cards[Math.floor(Math.random() * cards.length)]
+                let pos = cards.indexOf(rand)
+                player_1.cards.push(rand)
+                cards.splice(pos,1)
+                
+                rand = cards[Math.floor(Math.random() * cards.length)]
+                pos = cards.indexOf(rand)
+                player_2.cards.push(rand)
+                cards.splice(pos,1)
+            }   
+        }
+
+        function play(){
+            while (player_2.encore){
+                if (player_1.encore) {
+                    let card = player_1.cards[1]
+                    player_1.points += card.value
+                      const visualCard = document.createElement('div')
+                      visualCard.setAttribute('style', 'border: solid 1px #000')
+                      visualCard.setAttribute('style', 'border: solid 1px #000 ; width: 50px ; height: 70px ; float: left ; margin-left:-2px ; margin-top: 2px')
+                      const cardContent = document.createTextNode(card.figure)
+                      visualCard.appendChild(cardContent)
+                      document.body.appendChild(visualCard)
+                    player_1.cards.splice(1,1)
+                    if (player_1.cards.length === 1) {
+                        player_1.encore = false
+                    }
+                }
+                if (player_2.encore) {
+                    let card = player_2.cards[1]
+                    player_2.points += card.value
+                    const visualCard = document.createElement('div')
+                    visualCard.setAttribute('style', 'border: solid 1px #000')
+                    visualCard.setAttribute('style', 'border: solid 1px #000 ; width: 50px ; height: 70px ; float: left ; margin-left:2px ; margin-top: 2px')
+                    const cardContent = document.createTextNode(card.figure)
+                    visualCard.appendChild(cardContent)
+                    document.body.appendChild(visualCard)
+                    player_2.cards.splice(1,1)
+                    player_2.cards.length
+                    if (player_2.cards.length == 1) {
+                        player_2.encore = false
+                    }
+                }
+            }
+        
+        }
+
+        
     </script>
 </html>
