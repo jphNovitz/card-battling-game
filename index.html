@@ -6,17 +6,52 @@
 <html>
     <head>
         <meta charset="UTF-8"> 
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+            rel="stylesheet" 
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+            crossorigin="anonymous">
         <title>card battling game @jphNovitz</title>
     </head>
 
     <body>
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-6">
+                            <div id="player_1" class="col-md-12">
+                            </div>
+                            
+                            <div id="player_2" class="col-md-12">
+                            </div>
+
+                            </div>
+                <div class="col-md-6">
+                    <div class="row">
+                            <div class="lateral col-md-12">
+                                <span id="points_1">
+                                    0
+                                </span>
+                            </div>
+                            <div class="lateral col-md-12">
+                                    <button id="test">play</button>
+                            </div>
+                            <div class="col-md-12">
+                                    <span id="points_2">
+                                            0
+                                        </span>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 
     </body>
     <script>
     /* variables definitions */
         var cards = []
         var family = ['clubs',  'spades', 'hearts', 'diamonds']
-        var figures = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'queen', 'valet', 'king', 'as']
+        var figures = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Q', 'V', 'K', 'A']
         var player_1 = {
             cards: [],
             points: 0,
@@ -33,9 +68,8 @@
 
         initialize()
         distribute()
-        play()
-        console.log(player_1)
-        console.log(player_2)
+        document.getElementById('test').addEventListener("click", play)
+       
 
 
     /****** functions ******/
@@ -69,40 +103,64 @@
         }
 
         function play(){
-            while (player_2.encore){
                 if (player_1.encore) {
                     let card = player_1.cards[1]
                     player_1.points += card.value
                       const visualCard = document.createElement('div')
                       visualCard.setAttribute('style', 'border: solid 1px #000')
-                      visualCard.setAttribute('style', 'border: solid 1px #000 ; width: 50px ; height: 70px ; float: left ; margin-left:-2px ; margin-top: 2px')
+                      visualCard.setAttribute('style', 'border: solid 1px rgb(248,236,73) ; color: rgb(248,236,73); border-radius: 5px ; width: 50px ; height: 70px ; float: left ; margin-left:-2px ; margin-top: 2px')
                       const cardContent = document.createTextNode(card.figure)
                       visualCard.appendChild(cardContent)
-                      document.body.appendChild(visualCard)
+                      document.getElementById('player_1').appendChild(visualCard)
+                      document.getElementById('points_1').innerHTML= player_1.points
                     player_1.cards.splice(1,1)
                     if (player_1.cards.length === 1) {
                         player_1.encore = false
                     }
                 }
+                window.setTimeout(function () {
                 if (player_2.encore) {
                     let card = player_2.cards[1]
                     player_2.points += card.value
                     const visualCard = document.createElement('div')
                     visualCard.setAttribute('style', 'border: solid 1px #000')
-                    visualCard.setAttribute('style', 'border: solid 1px #000 ; width: 50px ; height: 70px ; float: left ; margin-left:2px ; margin-top: 2px')
+                    visualCard.setAttribute('style', 'border: solid 1px rgb(248,236,73); color: rgb(248,236,73); border-radius: 5px ; width: 50px ; height: 70px ; float: left ; margin-left:2px ; margin-top: 2px')
                     const cardContent = document.createTextNode(card.figure)
                     visualCard.appendChild(cardContent)
-                    document.body.appendChild(visualCard)
+                    document.getElementById('player_2').appendChild(visualCard)
+                    document.getElementById('points_2').innerHTML= player_2.points
                     player_2.cards.splice(1,1)
                     player_2.cards.length
                     if (player_2.cards.length == 1) {
                         player_2.encore = false
-                    }
+                        document.getElementById('test').removeEventListener("click", alert('fini'))                        
+                    } 
                 }
-            }
-        
+            }, 1800)
+            
         }
 
         
     </script>
 </html>
+
+<style>
+    body {
+        background-color: rgb(1,130,118);
+        /*color: rgb(248,236,73);*/
+    }
+    #player_1, #player_2 {
+        height: 49vh;
+        min-height: 49vh;
+    }
+    .lateral {
+        height: 47vh;
+        min-height: 45vh;
+    }
+    #points_1, #points_2 {
+        background-color: inherit;
+        color: rgb(248,236,73);
+        font-size: 2em;
+    }
+    
+</style>
