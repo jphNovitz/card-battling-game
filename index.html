@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row">
                     <div class="col-md-6">
-                            <div id="player_1" class="col-md-12">
+                            <div id="player_1" class="col-md-12" style="border-bottom: dotted 1px #fff">
                             </div>
                             
                             <div id="player_2" class="col-md-12">
@@ -31,10 +31,10 @@
                                     0
                                 </span>
                             </div>
-                            <div class="lateral col-md-12">
-                                    <button id="test">play</button>
-                            </div>
                             <div class="col-md-12">
+                                    <button id="test" class="btn btn-info btn-block">play</button>
+                            </div>
+                            <div class="lateral col-md-12">
                                     <span id="points_2">
                                             0
                                         </span>
@@ -84,7 +84,6 @@
                     }
                     cards.push(test)
                 }
-                
             })
         }
 
@@ -107,8 +106,7 @@
                     let card = player_1.cards[1]
                     player_1.points += card.value
                       const visualCard = document.createElement('div')
-                      visualCard.setAttribute('style', 'border: solid 1px #000')
-                      visualCard.setAttribute('style', 'border: solid 1px rgb(248,236,73) ; color: rgb(248,236,73); border-radius: 5px ; width: 50px ; height: 70px ; float: left ; margin-left:-2px ; margin-top: 2px')
+                      visualCard.classList.add('card')
                       const cardContent = document.createTextNode(card.figure)
                       visualCard.appendChild(cardContent)
                       document.getElementById('player_1').appendChild(visualCard)
@@ -123,8 +121,7 @@
                     let card = player_2.cards[1]
                     player_2.points += card.value
                     const visualCard = document.createElement('div')
-                    visualCard.setAttribute('style', 'border: solid 1px #000')
-                    visualCard.setAttribute('style', 'border: solid 1px rgb(248,236,73); color: rgb(248,236,73); border-radius: 5px ; width: 50px ; height: 70px ; float: left ; margin-left:2px ; margin-top: 2px')
+                    visualCard.classList.add('card')
                     const cardContent = document.createTextNode(card.figure)
                     visualCard.appendChild(cardContent)
                     document.getElementById('player_2').appendChild(visualCard)
@@ -145,22 +142,42 @@
 </html>
 
 <style>
-    body {
+    .container {
         background-color: rgb(1,130,118);
-        /*color: rgb(248,236,73);*/
+        height: 99vh;
     }
+
     #player_1, #player_2 {
         height: 49vh;
         min-height: 49vh;
+        padding: 1.5em;
     }
+
     .lateral {
         height: 47vh;
         min-height: 45vh;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
+
     #points_1, #points_2 {
+        margin: auto;
         background-color: inherit;
         color: rgb(248,236,73);
         font-size: 2em;
+    }
+
+    .card {
+        background-color: #fff;
+        color: #000;
+        border: solid 1px rgb(248,236,73) ;
+        border-radius: 5px ;  
+        margin-left: -15px ; 
+        margin-top: 2px;
+        width: 50px ; height: 70px ; 
+        float: left ; 
     }
     
 </style>
