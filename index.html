@@ -95,19 +95,9 @@
             while (cards.length > 0) {
                 // card to player 1
                 giveCardToPlayer(player_1) 
-              /*  randomCard = cards[Math.floor(Math.random() * cards.length)]
-                cardPosition = cards.indexOf(randomCard)
-                player_1.cards.push(randomCard)
-                cards.splice(cardPosition,1)
-               */ 
                
                // card to player 2
                giveCardToPlayer(player_2) 
-               /* randomCard = cards[Math.floor(Math.random() * cards.length)]
-                cardPosition = cards.indexOf(randomCard)
-                player_2.cards.push(randomCard)
-                cards.splice(pos,1)
-                */
             }   
         }
 
@@ -122,34 +112,46 @@
 
         }
 
+        function pickCard(player) {
+            let card = player.cards[0]
+            player.cards.splice(0,1)
+            return card
+        }
+
+        function displayCard(card){
+
+            const visualCard = document.createElement('div')
+            visualCard.classList.add('card')
+            const cardContent = document.createTextNode(card.figure)
+            visualCard.appendChild(cardContent)
+            return visualCard
+        }
+
         function play(){
             if (player_1.encore) {
-                let card = player_1.cards[1]
+                console.log(player_1.cards.length)
+                
+               const card = pickCard(player_1)
+               const visualCard = (displayCard)(card)
+                document.getElementById('player_1').appendChild(visualCard)
                 player_1.points += card.value
-                    const visualCard = document.createElement('div')
-                    visualCard.classList.add('card')
-                    const cardContent = document.createTextNode(card.figure)
-                    visualCard.appendChild(cardContent)
-                    document.getElementById('player_1').appendChild(visualCard)
-                    document.getElementById('points_1').innerHTML= player_1.points
-                player_1.cards.splice(1,1)
+                document.getElementById('points_1').innerHTML= player_1.points
+                 
                 if (player_1.cards.length === 1) {
                     player_1.encore = false
                 }
             }
                 window.setTimeout(function () {
                 if (player_2.encore) {
-                    let card = player_2.cards[1]
-                    player_2.points += card.value
-                    const visualCard = document.createElement('div')
-                    visualCard.classList.add('card')
-                    const cardContent = document.createTextNode(card.figure)
-                    visualCard.appendChild(cardContent)
-                    document.getElementById('player_2').appendChild(visualCard)
-                    document.getElementById('points_2').innerHTML= player_2.points
-                    player_2.cards.splice(1,1)
-                    player_2.cards.length
-                    if (player_2.cards.length == 1) {
+                    console.log(player_2.cards.length)
+                
+                    const card = pickCard(player_2)
+                    const visualCard = (displayCard)(card)
+                     document.getElementById('player_2').appendChild(visualCard)
+                     player_2.points += card.value
+                     document.getElementById('points_2').innerHTML= player_2.points
+                      
+                    if (player_2.cards.length === 1) {
                         player_2.encore = false
                         document.getElementById('test').removeEventListener("click", alert('fini'))                        
                     } 
