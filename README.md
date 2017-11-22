@@ -1,4 +1,7 @@
 # card-battling-game
 
-just a execercie.
-the goal is to create a card-battling-game with just somme javascript, html and css
+## What and why ?  
+Playing card batling game versus computer in not That exciting.    
+Playing whith javasctipt, a little oop and css/html is more entertaining.  
+Every exercice is a good thing to take i took this one.  
+  

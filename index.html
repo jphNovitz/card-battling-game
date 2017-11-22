@@ -49,117 +49,116 @@
     </body>
     <script>
     /* variables definitions */
-        var cards = []
-        var family = ['clubs',  'spades', 'hearts', 'diamonds']
-        var figures = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Q', 'V', 'K', 'A']
-        var player_1 = {
+    const game = {
+        cards : [],
+        family : ['clubs',  'spades', 'hearts', 'diamonds'],
+        figures : ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Q', 'V', 'K', 'A'],
+        player_1 : {
             cards: [],
             points: 0,
             encore: true
-        };
-        var player_2 = {
+        },
+        player_2 : {
             cards: [],
             points: 0,
             encore: true
-        };
+        },
 
-
-    /* end variable definitions */
-
-        initialize()
-        distribute()
-        document.getElementById('test').addEventListener("click", play)
-       
-
-
-    /****** functions ******/
-   
-        function initialize() {
-            figures.map(function (fig) {
+        initialize : function() {
+            this.figures.map(fig => {
                 for (let i = 0 ; i < 4 ; i++) {
-                    let test = {
-                        'family': family[i],
+                    let tempCard = {
+                        'family': this.family[i],
                         'figure': fig,
-                        'value': figures.indexOf(fig)
+                        'value': this.figures.indexOf(fig)
                     }
-                    cards.push(test)
+                    this.cards.push(tempCard)
                 }
-            })
-        }
-
-        /**
-        *   distribute() give alternatively cards to player 1 an player 2 
-        *   till cards array is empty
-        **/
-        function distribute() {
-            while (cards.length > 0) {
-                // card to player 1
-                giveCardToPlayer(player_1) 
-               
-               // card to player 2
-               giveCardToPlayer(player_2) 
-            }   
-        }
+            }
+            )},
 
         /**
         *   giveCardToPLayer() take a card from cards and give it to player
         **/
-        function giveCardToPlayer(player) {
-            let randomCard = cards[Math.floor(Math.random() * cards.length)]
-            let cardPosition = cards.indexOf(randomCard)
+        giveCardToPlayer : function(player) {
+            let randomCard = this.cards[Math.floor(Math.random() * this.cards.length)]
+            let cardPosition = this.cards.indexOf(randomCard)
             player.cards.push(randomCard)
-            cards.splice(cardPosition,1)
+            this.cards.splice(cardPosition,1)
+        },
+    
+        /**
+        *   distribute() give alternatively cards to player 1 an player 2 
+        *   till cards array is empty
+        **/
+        distribute : function () {
+            while (this.cards.length > 0) {
+                this.giveCardToPlayer(this.player_1)  // card to player 1 
+                this.giveCardToPlayer(this.player_2)  // card to player 2 
+            }   
+        },
+                
 
-        }
-
-        function pickCard(player) {
+        pickCard :  function(player) {
             let card = player.cards[0]
             player.cards.splice(0,1)
             return card
-        }
+        },
 
-        function displayCard(card){
-
+        displayCard : function (card, player) {
             const visualCard = document.createElement('div')
             visualCard.classList.add('card')
             const cardContent = document.createTextNode(card.figure)
             visualCard.appendChild(cardContent)
+            document.getElementById(player).appendChild(visualCard)
             return visualCard
-        }
+        },
 
-        function play(){
-            if (player_1.encore) {
-                console.log(player_1.cards.length)
-                
-               const card = pickCard(player_1)
-               const visualCard = (displayCard)(card)
-                document.getElementById('player_1').appendChild(visualCard)
-                player_1.points += card.value
-                document.getElementById('points_1').innerHTML= player_1.points
-                 
-                if (player_1.cards.length === 1) {
-                    player_1.encore = false
-                }
-            }
-                window.setTimeout(function () {
-                if (player_2.encore) {
-                    console.log(player_2.cards.length)
-                
-                    const card = pickCard(player_2)
-                    const visualCard = (displayCard)(card)
-                     document.getElementById('player_2').appendChild(visualCard)
-                     player_2.points += card.value
-                     document.getElementById('points_2').innerHTML= player_2.points
-                      
-                    if (player_2.cards.length === 1) {
-                        player_2.encore = false
-                        document.getElementById('test').removeEventListener("click", alert('fini'))                        
-                    } 
-                }
-            }, 1800)
+        givePoints: function () {}
+
+}
+
+function play (obj){
+   
+    if (obj.player_1.encore) {
+        console.log(obj.player_1.cards.length)
+        const card = obj.pickCard(obj.player_1)
+        const visualCard = (obj.displayCard)(card, 'player_1')
+        
+        document.getElementById('player_1').appendChild(visualCard)
+        obj.player_1.points += card.value
+        document.getElementById('points_1').innerHTML= obj.player_1.points
             
+        if (obj.player_1.cards.length === 1) {
+            obj.player_1.encore = false
         }
+    }
+        window.setTimeout(function () {
+        if (obj.player_2.encore) {
+            console.log(obj.player_2.cards.length)
+            const card = obj.pickCard(obj.player_2)
+            const visualCard = (obj.displayCard)(card, 'player_2')
+            //document.getElementById('player_2').appendChild(visualCard)
+            obj.player_2.points += card.value
+            document.getElementById('points_2').innerHTML= obj.player_2.points
+                
+            if (obj.player_2.cards.length === 1) {
+            obj.player_2.encore = false
+            document.getElementById('test').removeEventListener("click", alert('fini'))                        
+            } 
+        }
+    }, 1800)
+    
+}
+        
+        const enjoy = Object.create(game);
+        enjoy.initialize();       
+        enjoy.distribute();
+        console.log(enjoy.player_1.cards)
+        console.log(enjoy.player_2.cards)
+        document.getElementById('test').addEventListener('click', function () {play(enjoy)})
 
+        
         
     </script>
 </html>
